@@ -1,0 +1,52 @@
+<app-card [title]="'Signup'" [loading]="loading">
+	<form [formGroup]="signupForm" (ngSubmit)="handleSignup()">
+		<div class="flex flex-col gap-5">
+			<app-input
+				[control]="signupForm.controls.emailFormControl"
+				value=""
+				label="Email"
+				placeholder="Enter email address"
+			>
+				<div
+					*ngIf="
+						signupForm.controls.emailFormControl.invalid &&
+						(signupForm.controls.emailFormControl.dirty ||
+							signupForm.controls.emailFormControl.touched)
+					"
+					error
+				>
+					<div *ngIf="signupForm.controls.emailFormControl.hasError('required')">Email is required</div>
+					<div *ngIf="signupForm.controls.emailFormControl.hasError('email')">Must be a valid email</div>
+				</div>
+			</app-input>
+
+			<app-input
+				[control]="signupForm.controls.passwordFromControl"
+				value=""
+				label="Password"
+				type="password"
+				placeholder="Enter password"
+			>
+				<div
+					*ngIf="
+						signupForm.controls.passwordFromControl.invalid &&
+						(signupForm.controls.passwordFromControl.dirty ||
+							signupForm.controls.passwordFromControl.touched)
+					"
+					error
+				>
+					<div *ngIf="signupForm.controls.passwordFromControl.hasError('required')">
+						Password is required
+					</div>
+					<div *ngIf="signupForm.controls.passwordFromControl.hasError('minLength')">
+						Password must be at least 8 characters in length
+					</div>
+				</div>
+			</app-input>
+		</div>
+		<button class="btn btn-primary text-white text-xl w-full mt-10" type="submit">Signup</button>
+		<div class="text-center">
+			<button class="btn btn-link" (click)="handleNavigateSignin()">Already have account?</button>
+		</div>
+	</form>
+</app-card>

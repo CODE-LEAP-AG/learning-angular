@@ -1,0 +1,22 @@
+<div class="p-16">
+	<div class="calendar h-[4850px] relative">
+		@for (dayWeek of week; track $index) {
+		<div class="text-center self-center">
+			<span class="">
+				{{ dayWeek }}
+			</span>
+		</div>
+		} @for (colLine of numColLine; track $index) {
+		<div
+			class="h-[calc(100%-50px)] w-[1px] bg-slate-300 absolute top-[50px]"
+			[ngStyle]="{ left: colLine.value + '%' }"
+		></div>
+		} @for (rowLine of numRowLine; track $index) {
+		<div class="w-full h-[1px] bg-slate-700 absolute" [ngStyle]="{ top: rowLine.value + 'px' }">
+			<div class="absolute translate-x-[-110%] translate-y-[-50%]">{{ rowLine.label }}</div>
+		</div>
+		}
+		<div class="bg-red-300 col-start-2 h-[100px] opacity-45 rounded-lg row-start-2 row-span-2"></div>
+		<div class="bg-blue-300 col-start-2 h-[100px] opacity-45 rounded-lg"></div>
+	</div>
+</div>
