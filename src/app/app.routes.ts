@@ -17,6 +17,10 @@ export const routes: Routes = [
         loadChildren: async () => (await import('@pages/learn')).routes
     },
     {
+        path: 'projects',
+        loadChildren: async () => (await import('@pages/projects')).routes
+    },
+    {
         path: '**',
         loadComponent: async () => (await import('@pages/not-found/not-found.component')).NotFoundComponent,
     },
