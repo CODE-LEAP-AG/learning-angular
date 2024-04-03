@@ -1,95 +1,46 @@
+@if (!loading) {
 <div class="bg-black">
-  <!-- backdrop section -->
-  <div class="relative h-screen">
-    <div [style]="{
-      backgroundImage: 'url(https://image.tmdb.org/t/p/original' + topRated.backdrop_path + ')',
-      backgroundPosition: 'center',
-      backgroundSize: 'cover',
-      backgroundRepeat: 'no-repeat'
-    }" class="w-full h-full ">
-    </div> 
-    <div  class="backdrop-gradient"></div>
-    <div class="movie-info absolute top-[30%] left-[5%] max-w-[500px] break-words">
-      <div class="text-white text-[60px] font-bold leading-tight">
-        {{topRated.title}}
-      </div>
-      <div class="text-white flex gap-3 text-lg mt-4">
-        <span>{{topRated.release_date | date}}</span>
-        |
-        <span class="flex gap-1 ">
-          {{topRated.vote_count}}
-          <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-thumb-up"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 11v8a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1v-7a1 1 0 0 1 1 -1h3a4 4 0 0 0 4 -4v-1a2 2 0 0 1 4 0v5h3a2 2 0 0 1 2 2l-1 5a2 3 0 0 1 -2 2h-7a3 3 0 0 1 -3 -3" /></svg>
-        </span>
-        |
-        <span>{{topRated.original_language | uppercase}}</span>
-      </div>
-      <div class="mt-4 text-white text-sm opacity-70">
-        {{topRated.overview}}
-      </div>
-
-    </div>
-    <div class="absolute left-[5%] top-0 text-white py-8 flex justify-between w-[90%]">
-      <div class="logo cursor-pointer select-none">
-        <div class="font-bold text-[25px] leading-7 ">Code_Leap</div>
-        <div class="text-right text-sm mt-1">.movie</div>
-      </div>
-      <div class="flex gap-5 ">
-        <div class="text-lg cursor-pointer hover:opacity-70 transition">About</div>
-        <div class="text-lg cursor-pointer hover:opacity-70 transition">Popular</div>
-        <div class="text-lg cursor-pointer hover:opacity-70 transition">Top rated</div>
-        <div class="text-lg cursor-pointer hover:opacity-70 transition">Up coming</div>
-        |
-        <div class="text-lg cursor-pointer hover:opacity-70 transition">Login</div>
-      </div>
-    </div>
-    <div class="size-28 rounded-full border-2 border-dashed border-w right-[30%] absolute bottom-[45%] text-9xl flex items-center justify-center cursor-pointer overflow-hidden after:content-[''] after:absolute after:w-full after:h-full after:bg-gray-200 after:opacity-20 group hover:border-solid transition" (click)="togglePlayer(true)">
-      <svg  xmlns="http://www.w3.org/2000/svg"  width="40"  height="40"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-player-play text-white group-hover:scale-125 transition"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 4v16l13 -8z" /></svg>
-    </div>
-    <div class="absolute bottom-4 left-[50%] translate-x-[-50%] w-6 h-12 border rounded-lg">
-      <div class="size-2 rounded-full bg-white absolute left-[50%] translate-x-[-50%] top-2">
-    </div>
-  </div>
-  <app-video-player *ngIf="openPlayer" [showDialog]="openPlayer" (click)="togglePlayer(false)"/>
-  
-  <div class="p-10 space-y-4 bg-black">
-    <div class="">
-      <div class="flex justify-between text-white w-full mb-3">
-        <p class="text-xl">Popular</p>
-        <p class="underline cursor-pointer">See alls</p>
-      </div>
-      <div class="border flex gap-4">
-        <div class="w-[250px] h-[300px] border border-dashed"></div>
-        <div class="w-[250px] h-[300px] border border-dashed"></div>
-        <div class="w-[250px] h-[300px] border border-dashed"></div>
-        <div class="w-[250px] h-[300px] border border-dashed"></div>
-        <div class="w-[250px] h-[300px] border border-dashed"></div>
-      </div>
-    </div>
-    <div class="">
-      <div class="flex justify-between text-white w-full mb-3">
-        <p class="text-xl">Top rated</p>
-        <p class="underline cursor-pointer">See alls</p>
-      </div>
-      <div class="border flex gap-4">
-        <div class="w-[250px] h-[300px] border border-dashed"></div>
-        <div class="w-[250px] h-[300px] border border-dashed"></div>
-        <div class="w-[250px] h-[300px] border border-dashed"></div>
-        <div class="w-[250px] h-[300px] border border-dashed"></div>
-        <div class="w-[250px] h-[300px] border border-dashed"></div>
-      </div>
-    </div>
-    <div class="">
-      <div class="flex justify-between text-white w-full mb-3">
-        <p class="text-xl">Up coming</p>
-        <p class="underline cursor-pointer">See alls</p>
-      </div>
-      <div class="border flex gap-4">
-        <div class="w-[250px] h-[300px] border border-dashed"></div>
-        <div class="w-[250px] h-[300px] border border-dashed"></div>
-        <div class="w-[250px] h-[300px] border border-dashed"></div>
-        <div class="w-[250px] h-[300px] border border-dashed"></div>
-        <div class="w-[250px] h-[300px] border border-dashed"></div>
-      </div>
-    </div>
-  </div>
+	<!-- backdrop section -->
+	<div class="relative h-screen">
+		<app-movie-backdrop [movie]="topRated" />
+		<div class="p-10 space-y-4 bg-black">
+			<div id="popular">
+				<div class="flex justify-between text-white w-full mb-3">
+					<p class="text-xl">Popular</p>
+					<p class="underline cursor-pointer">See alls</p>
+				</div>
+				<div class="flex gap-4 max-w-[100vw] overflow-auto custom-scroll py-2">
+					@for (m of popularList; track m.id) {
+					<app-movie-card [movie]="m"></app-movie-card>
+					}
+				</div>
+			</div>
+			<div id="topRated">
+				<div class="flex justify-between text-white w-full mb-3">
+					<p class="text-xl">Top rated</p>
+					<p class="underline cursor-pointer">See alls</p>
+				</div>
+				<div class="flex gap-4 max-w-[100vw] overflow-auto custom-scroll py-2">
+					@for (m of topRatedList; track m.id) {
+					<app-movie-card [movie]="m"></app-movie-card>
+					}
+				</div>
+			</div>
+			<div id="upComing">
+				<div class="flex justify-between text-white w-full mb-3">
+					<p class="text-xl">Up coming</p>
+					<p class="underline cursor-pointer">See alls</p>
+				</div>
+				<div class="flex gap-4 max-w-[100vw] overflow-auto custom-scroll py-2">
+					@for (m of upcomingList; track m.id) {
+					<app-movie-card [movie]="m"></app-movie-card>
+					}
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
+
+} @else {
+<app-loading />
+}

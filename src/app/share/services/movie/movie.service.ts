@@ -23,4 +23,14 @@ export class MovieService {
     this.popularTotalPage = resp.total_pages
     return resp.results
   }
+  async getUpComingMovie(page: number) {
+
+    const resp = await lastValueFrom(this.apiClient.get<IMovieResp>(`${this.tmdbUrl}/popular?upcoming=en-US&page=${page}`))
+    return resp.results
+  }
+  async getTopRatedMovie(page: number) {
+
+    const resp = await lastValueFrom(this.apiClient.get<IMovieResp>(`${this.tmdbUrl}/top_rated?language=en-US&page=${page}`))
+    return resp.results
+  }
 }
