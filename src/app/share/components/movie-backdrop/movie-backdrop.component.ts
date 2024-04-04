@@ -3,6 +3,7 @@ import { IMovie } from '@share/models/movie';
 import { CommonModule } from '@angular/common';
 import gsap from 'gsap';
 import ScrollToPlugin from 'gsap/ScrollToPlugin';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 @Component({
   selector: 'app-movie-backdrop',
@@ -27,8 +28,7 @@ export class MovieBackdropComponent implements OnInit {
 
 
   ngOnInit(): void {
-    gsap.registerPlugin(ScrollToPlugin)
-
+    gsap.registerPlugin(ScrollToPlugin, ScrollTrigger)
     this.backdropTl.from('#backdropHeader', {
       y: 100
     }).from('#backdropInfo', {
@@ -49,10 +49,32 @@ export class MovieBackdropComponent implements OnInit {
       duration: 1.4
     })
 
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: '.movie-info__content',
+        markers: false,
+        start: '10% 25%',
+        toggleActions: 'play pause reverse pause',
+        scrub: 1
+      }
+    }).to('.movie-info__content #backdropHeader', {
+      xPercent: -100
+    }).to(".movie-info__content #backdropInfo", {
+      xPercent: 100
+    }, "<")
+      .to(".movie-info__content #backdropInfo", {
+        opacity: 0
+      }, "<30%")
+      .to(".movie-info__content #backdropOverview", {
+        xPercent: -100,
+      }, "<")
+
+  }
+  ngAfterViewInit(): void {
+    console.log('ngAfterViewInit')
   }
   ngOnDestroy(): void {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
+
     this.backdropTl.revert()
     this.scrollIndicatorTl.revert()
   }
