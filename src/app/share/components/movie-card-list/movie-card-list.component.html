@@ -1,0 +1,5 @@
+<div class="flex gap-4 max-w-[100vw] overflow-auto custom-scroll py-2 relative justify-center" id="cardList">
+	@for (m of movieList; track m.id) {
+	<app-movie-card [movie]="m"></app-movie-card>
+	}
+</div>
