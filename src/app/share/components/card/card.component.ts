@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { HighlightDirective } from '@share/directives/highlight.directive';
 import { UnlessDirective } from '@share/directives/unless.directive';
 
@@ -17,5 +17,11 @@ export class CardComponent {
 
   @Input()
   title = ''
+
+  @Output() onCardClick = new EventEmitter()
+
+  handleCardClick() {
+    this.onCardClick.emit()
+  }
 
 }

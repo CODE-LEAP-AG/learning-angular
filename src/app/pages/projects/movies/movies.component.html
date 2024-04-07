@@ -1,45 +1,134 @@
 @if (!loading) {
 <div class="bg-black">
-	<!-- backdrop section -->
-	<div class="relative h-screen">
-		<app-movie-backdrop [movie]="topRated" (onLogin)="handleLogin()" />
-		<app-about />
-		<div class="p-10 space-y-4 bg-black">
-			<div id="popular">
-				<div class="flex justify-between text-white w-full mb-3">
-					<p class="text-xl">Popular</p>
-					<p class="underline cursor-pointer">See alls</p>
-				</div>
-				<div class="flex gap-4 max-w-[100vw] overflow-auto custom-scroll py-2">
-					@for (m of popularList; track m.id) {
-					<app-movie-card [movie]="m"></app-movie-card>
-					}
-				</div>
-			</div>
-			<div id="topRated">
-				<div class="flex justify-between text-white w-full mb-3">
-					<p class="text-xl">Top rated</p>
-					<p class="underline cursor-pointer">See alls</p>
-				</div>
-				<div class="flex gap-4 max-w-[100vw] overflow-auto custom-scroll py-2">
-					@for (m of topRatedList; track m.id) {
-					<app-movie-card [movie]="m"></app-movie-card>
-					}
-				</div>
-			</div>
-			<div id="upComing">
-				<div class="flex justify-between text-white w-full mb-3">
-					<p class="text-xl">Up coming</p>
-					<p class="underline cursor-pointer">See alls</p>
-				</div>
-				<div class="flex gap-4 max-w-[100vw] overflow-auto custom-scroll py-2">
-					@for (m of upcomingList; track m.id) {
-					<app-movie-card [movie]="m"></app-movie-card>
-					}
-				</div>
-			</div>
-		</div>
-	</div>
+  <!-- backdrop section -->
+  <div class="relative h-screen">
+    <app-movie-backdrop [movie]="topRated" (onLogin)="handleLogin()" />
+    <app-about class="hidden md:block" />
+    <div class="p-4 md:p-10 space-y-4 bg-black">
+      <div id="popular">
+        <div class="flex justify-between text-white w-full mb-3">
+          <p class="text-md md:text-xl">Popular</p>
+          <p class="underline cursor-pointer text-xs">See alls</p>
+        </div>
+        <div class="flex gap-4 max-w-[100vw] overflow-auto custom-scroll py-2">
+          @for (m of popularList; track m.id) {
+          <app-movie-card
+            [movie]="m"
+            (onMovieClick)="handleMovieDetails($event)"
+          ></app-movie-card>
+          }
+        </div>
+      </div>
+      <div id="topRated">
+        <div class="flex justify-between text-white w-full mb-3">
+          <p class="text-md md:text-xl">Top rated</p>
+          <p class="underline cursor-pointer text-xs">See alls</p>
+        </div>
+        <div class="flex gap-4 max-w-[100vw] overflow-auto custom-scroll py-2">
+          @for (m of topRatedList; track m.id) {
+          <app-movie-card
+            [movie]="m"
+            (onMovieClick)="handleMovieDetails($event)"
+          ></app-movie-card>
+          }
+        </div>
+      </div>
+      <div id="upComing">
+        <div class="flex justify-between text-white w-full mb-3">
+          <p class="text-md md:text-xl">Up coming</p>
+          <p class="underline cursor-pointer text-xs">See alls</p>
+        </div>
+        <div class="flex gap-4 max-w-[100vw] overflow-auto custom-scroll py-2">
+          @for (m of upcomingList; track m.id) {
+          <app-movie-card
+            [movie]="m"
+            (onMovieClick)="handleMovieDetails($event)"
+          ></app-movie-card>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-loading-popup
+    [showPopup]="showDetailPopup"
+    [loading]="movieDetailLoading"
+  >
+    @if (movieDetails ) {
+    <div class="relative">
+      <div
+        class="backdrop-img w-full aspect-video rounded-lg shadow-md relative after:contents-[''] after:absolute after:w-full after:h-full after:left-0 after:top-0 after:bg-gradient-to-r from-[rgba(0,0,0,0.7483368347338936)] via-60% via-[rgba(0,0,0,0.196516106442577)] to-[rgba(0,0,0,0.6334908963585435)]"
+        [style]="{
+          backgroundImage:
+            'url(https://image.tmdb.org/t/p/original' +
+            movieDetails.backdrop_path +
+            ')',
+          backgroundPosition: 'center',
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat'
+        }"
+      ></div>
+      <div
+        (click)="showDetailPopup = false"
+        class="w-6 h-6 rounded-full border-2 border-white text-center absolute right-2 top-2 flex items-center justify-center cursor-pointer"
+      >
+        <span class="text-white text-sm select-none">x</span>
+      </div>
+      <div class="content p-4 md:p-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <p class="text-white text-lg md:text-4xl">
+              {{ movieDetails.title }}
+            </p>
+            <div class="flex gap-2 items-center text-white mt-4 text-sm">
+              <span>{{ movieDetails.release_date | date }}</span>
+              |
+              <span class="flex gap-1 items-center">
+                {{ movieDetails.vote_count }}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-thumb-up"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path
+                    d="M7 11v8a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1v-7a1 1 0 0 1 1 -1h3a4 4 0 0 0 4 -4v-1a2 2 0 0 1 4 0v5h3a2 2 0 0 1 2 2l-1 5a2 3 0 0 1 -2 2h-7a3 3 0 0 1 -3 -3"
+                  />
+                </svg>
+              </span>
+              |
+              <span>{{ movieDetails.original_language | uppercase }}</span>
+              |
+              <div
+                class="w-8 h-8 flex items-center justify-center rounded-lg text-white border border-white"
+              >
+                4K
+              </div>
+            </div>
+          </div>
+          <div class="flex gap-4 flex-wrap md:justify-end">
+            @for (g of movieDetails.genres; track $index) {
+            <div
+              class="px-3 py-1 text-xs md:text-md text-white rounded-lg border h-fit border-white align-top"
+            >
+              {{ g.name }}
+            </div>
+            }
+          </div>
+        </div>
+        <div class="text-xs md:text-sm mt-4">
+          {{ movieDetails.overview }}
+        </div>
+      </div>
+    </div>
+    }
+  </app-loading-popup>
 </div>
 
 } @else {

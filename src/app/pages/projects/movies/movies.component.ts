@@ -1,27 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { IMovie } from '@share/models/movie';
+import { IMovie, IMovieDetail } from '@share/models/movie';
 import { CommonModule } from '@angular/common';
-import { VideoPlayerComponent } from '@share/components';
-import { MovieCardComponent } from '@share/components';
-import { LoadingComponent } from '@share/components';
+import { LoadingComponent, AboutComponent, MovieCardComponent, VideoPlayerComponent, MovieBackdropComponent, LoadingPopupComponent } from '@share/components';
 import { delay } from '@share/utils';
-import { MovieBackdropComponent } from '@share/components';
 import { MovieService } from '@share/services/movie/movie.service';
-import gsap from 'gsap';
-import { AboutComponent } from '@share/components';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-movies',
   standalone: true,
-  imports: [CommonModule, VideoPlayerComponent, MovieCardComponent, LoadingComponent, MovieBackdropComponent, AboutComponent],
+  imports: [CommonModule, VideoPlayerComponent, MovieCardComponent, LoadingComponent, MovieBackdropComponent, AboutComponent, LoadingPopupComponent],
   templateUrl: './movies.component.html',
   styleUrl: './movies.component.scss'
 })
 export class MoviesComponent implements OnInit {
   openPlayer = false
   loading = true
+  movieDetailLoading = false
   public topRated: IMovie
+  public showDetailPopup = false
+  public movieDetails: IMovieDetail
   public topRatedList: Array<IMovie> = []
   public popularList: Array<IMovie> = []
   public upcomingList: Array<IMovie> = []
@@ -53,8 +51,21 @@ export class MoviesComponent implements OnInit {
     this.movieService.handlerRequestToken()
   }
 
-
   togglePlayer(isOpen: boolean) {
     this.openPlayer = isOpen
+  }
+  async handleMovieDetails(id: number) {
+    if (this.movieDetailLoading) {
+      return
+    }
+    this.showDetailPopup = true
+    this.movieDetailLoading = true
+    try {
+      this.movieDetails = await this.movieService.getMovieDetails(id)
+    } catch (error) {
+      console.log("get movie detail error", error)
+    } finally {
+      this.movieDetailLoading = false
+    }
   }
 }

@@ -16,3 +16,9 @@ body { margin: 0; font-family: Poppins, "Helvetica Neue", sans-serif; }
 .main {
     height: 100%;
 }
+.modal:not(dialog:not(.modal-open)), .modal::backdrop {
+    background-color: rgba(0, 0, 0,0.8) !important;
+}
+// * {
+//     outline: 1px solid red;
+// }

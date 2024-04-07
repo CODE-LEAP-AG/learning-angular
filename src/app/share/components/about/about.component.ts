@@ -16,32 +16,36 @@ export class AboutComponent {
 
   ngOnInit(): void {
     gsap.registerPlugin(ScrollTrigger, Draggable)
-    gsap.timeline({
-      scrollTrigger: {
-        trigger: "#aboutContainer",
-        pin: true,
-        scrub: 1,
-        markers: false,
-        end: "+=700"
-      }
-    }).to('#aboutContainer', {
-      xPercent: -100,
-      ease: "none",
-    });
-    gsap.timeline({ repeat: -1, yoyo: true }).from('#aboutContainer .logo', {
-      x: 20,
-      y: 6,
-      opacity: 1,
-      ease: 'back',
-      stagger: 0.1
+    let mm = gsap.matchMedia();
+    mm.add("(min-width: 800px)", () => {
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: "#aboutContainer",
+          pin: true,
+          scrub: 1,
+          markers: false,
+          end: "+=700"
+        }
+      }).to('#aboutContainer', {
+        xPercent: -100,
+        ease: "none",
+      });
+      gsap.timeline({ repeat: -1, yoyo: true }).from('#aboutContainer .logo', {
+        x: 20,
+        y: 6,
+        opacity: 1,
+        ease: 'back',
+        stagger: 0.1
+      })
+      Draggable.create('#shape1', {
+        bounds: '#aboutContainer',
+        type: 'x,y'
+      })
+      Draggable.create('#flower', {
+        type: 'rotation'
+      })
     })
-    Draggable.create('#shape1', {
-      bounds: '#aboutContainer',
-      type: 'x,y'
-    })
-    Draggable.create('#flower', {
-      type: 'rotation'
-    })
+
 
   }
 

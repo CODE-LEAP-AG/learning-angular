@@ -36,7 +36,7 @@ export class MovieService {
   }
   async getUpComingMovie(page: number) {
 
-    const resp = await lastValueFrom(this.apiClient.get<IMovieResp>(`${this.tmdbUrl}/movie/popular?upcoming=en-US&page=${page}`))
+    const resp = await lastValueFrom(this.apiClient.get<IMovieResp>(`${this.tmdbUrl}/movie/upcoming?language=en-US&page=${page}`))
     return resp.results
   }
   async getTopRatedMovie(page: number) {
@@ -52,7 +52,7 @@ export class MovieService {
       window.location.href = `https://www.themoviedb.org/authenticate/${resp.request_token}?redirect_to=http://localhost:4200/projects/movies`
     }
   }
-  async getMovieDetails(movieId: string) {
+  async getMovieDetails(movieId: number) {
     const resp = await lastValueFrom(this.apiClient.get<IMovieDetail>(`${this.tmdbUrl}/movie/${movieId}`))
     return resp
   }
