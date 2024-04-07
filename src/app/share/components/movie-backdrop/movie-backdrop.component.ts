@@ -1,14 +1,15 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IMovie } from '@share/models/movie';
 import { CommonModule } from '@angular/common';
 import gsap from 'gsap';
 import ScrollToPlugin from 'gsap/ScrollToPlugin';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { VideoPlayerComponent } from '@share/components';
 
 @Component({
   selector: 'app-movie-backdrop',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, VideoPlayerComponent],
   templateUrl: './movie-backdrop.component.html',
   styleUrl: './movie-backdrop.component.scss'
 })
@@ -23,6 +24,7 @@ export class MovieBackdropComponent implements OnInit {
   private scrollIndicatorTl = gsap.timeline({
     repeat: -1
   })
+  @Output() onLogin = new EventEmitter()
   @Input() movie: IMovie
   openPlayer = false
 
@@ -84,6 +86,9 @@ export class MovieBackdropComponent implements OnInit {
   }
   backdropAnimate() {
     this.backdropTl
+  }
+  handleLogin() {
+    this.onLogin.emit()
   }
   handleSection(id: string) {
     gsap.to(window, {

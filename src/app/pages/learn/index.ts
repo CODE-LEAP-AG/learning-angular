@@ -20,5 +20,10 @@ export const routes: Routes = [
     path: 'calendar',
     title: 'Calendar',
     loadComponent: async () => (await import('./calendar/calendar.component')).CalendarComponent
+  },
+  {
+    path: 'loading',
+    title: 'Loading',
+    loadComponent: async () => (await import('./loading/loading-page.component')).LoadingPageComponent
   }
 ]
