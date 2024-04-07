@@ -2,7 +2,7 @@
 <div class="bg-black">
 	<!-- backdrop section -->
 	<div class="relative h-screen">
-		<app-movie-backdrop [movie]="topRated" />
+		<app-movie-backdrop [movie]="topRated" (onLogin)="handleLogin()" />
 		<app-about />
 		<div class="p-10 space-y-4 bg-black">
 			<div id="popular">

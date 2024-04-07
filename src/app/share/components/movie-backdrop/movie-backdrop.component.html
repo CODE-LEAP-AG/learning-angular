@@ -82,7 +82,7 @@
 			Up coming
 		</div>
 		|
-		<div class="text-lg cursor-pointer hover:opacity-70 transition">Login</div>
+		<div class="text-lg cursor-pointer hover:opacity-70 transition" (click)="handleLogin()">Login</div>
 	</div>
 </div>
 
@@ -90,4 +90,4 @@
 	<div class="size-2 rounded-full bg-white absolute left-[50%] translate-x-[-50%] top-2 dot"></div>
 </div>
 
-<!-- <app-video-player *ngIf="openPlayer" [showDialog]="openPlayer" (click)="togglePlayer(false)" /> -->
+<app-video-player *ngIf="openPlayer" [showDialog]="openPlayer" (click)="togglePlayer(false)" />

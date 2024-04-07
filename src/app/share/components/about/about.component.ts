@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import gsap from 'gsap';
+import { Draggable } from 'gsap/Draggable';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 
@@ -12,10 +13,9 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 })
 export class AboutComponent {
 
-  private aboutTl = gsap.timeline()
 
   ngOnInit(): void {
-    gsap.registerPlugin(ScrollTrigger)
+    gsap.registerPlugin(ScrollTrigger, Draggable)
     gsap.timeline({
       scrollTrigger: {
         trigger: "#aboutContainer",
@@ -34,6 +34,13 @@ export class AboutComponent {
       opacity: 1,
       ease: 'back',
       stagger: 0.1
+    })
+    Draggable.create('#shape1', {
+      bounds: '#aboutContainer',
+      type: 'x,y'
+    })
+    Draggable.create('#flower', {
+      type: 'rotation'
     })
 
   }
